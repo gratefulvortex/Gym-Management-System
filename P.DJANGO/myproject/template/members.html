@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members List</title>
+</head>
+<body>
+    <h1>Members List</h1>
+
+    <!-- Membership Plan Selector -->
+    <form action="{% url 'members_page' %}" method="GET">
+        <label for="membership_plan">Select Membership Plan:</label>
+        <select name="membership_plan" id="membership_plan">
+            <option value="">All</option>
+            <option value="Basic" {% if selected_plan == "Basic" %} selected {% endif %}>Basic</option>
+            <option value="Advance" {% if selected_plan == "Advance" %} selected {% endif %}>Advance</option>
+            <option value="Pro" {% if selected_plan == "Pro" %} selected {% endif %}>Pro</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- Members Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Unique Number</th>
+                <th>Name</th>
+                <th>Membership Plan</th>
+                <th>Tenure</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <!-- Add more fields as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.unique_number }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.membership_plan }}</td>
+                <td>{{ member.tenure }}</td> <!-- Display the tenure -->
+                <td>{{ member.start_date }}</td> <!-- Display the start date -->
+                <td>{{ member.end_date }}</td> <!-- Display the end date -->
+                <!-- Add more fields as needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

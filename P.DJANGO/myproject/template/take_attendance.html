@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Attendance</title>
+</head>
+<body>
+    <h1>Take Attendance</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="member_id">Enter Member ID:</label>
+        <input type="text" id="member_id" name="member_id" required>
+        <button type="submit">Submit</button>
+    </form>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    
+    {% if all_attendance_records %}
+    <h2>Attendance Records:</h2>
+    <ul>
+        {% for record in all_attendance_records %}
+        <li>{{ record.member.name }} - {{ record.entry_time }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if member_attendance_records %}
+    <h2>Attendance Records for {{ member.name }}:</h2>
+    <ul>
+        {% for record in member_attendance_records %}
+            <li>{{ record.entry_time }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+</body>
+</html>
