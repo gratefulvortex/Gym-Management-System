@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style1.css' %}">
+    <style>
+        
+        .membership-icon {
+            width: 20px; 
+            height: auto; 
+            margin-right: 5px; 
+            vertical-align: middle; 
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>
+                <!-- Add image and text for Membership -->
+                <a href="{% url 'membership' %}">
+                    <img src="https://www.pinpng.com/pngs/m/16-168061_open-new-user-icon-png-transparent-png.png" class="membership-icon" alt="Membership Icon">
+                    Membership
+                </a>
+            </li>
+            <li><a href="{% url 'take_attendance' %}">Take Attendance</a></li>
+            <li><a href="{% url 'employee' %}">Employee</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'members' %}">Members</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <img src="https://i.shgcdn.com/d61f124a-5eb2-41c7-abd1-ace0dd6f7d97/-/format/auto/-/preview/3000x3000/-/quality/lighter/" alt="Membership1">
+    </div>
+
+    <footer>
+        <p>&copy; 2024 The Fitness Connection. All rights reserved.</p>
+    </footer>
+</body>
+</html>

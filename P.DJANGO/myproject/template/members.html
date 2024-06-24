@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-top: 30px;
+        }
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        select, button {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Members List</h1>
+
+    <!-- Membership Plan Selector -->
+    <form action="{% url 'members_page' %}" method="GET">
+        <label for="membership_plan">Select Membership Plan:</label>
+        <select name="membership_plan" id="membership_plan">
+            <option value="">All</option>
+            <option value="Basic" {% if selected_plan == "Basic" %} selected {% endif %}>Basic</option>
+            <option value="Advance" {% if selected_plan == "Advance" %} selected {% endif %}>Advance</option>
+            <option value="Pro" {% if selected_plan == "Pro" %} selected {% endif %}>Pro</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- Members Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Unique Number</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Membership Plan</th>
+                <th>Tenure</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Renew</th> <!-- Add a new column for the renew button -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.unique_number }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.last_name }}</td>
+                <td>{{ member.membership_plan }}</td>
+                <td>{{ member.tenure }}</td>
+                <td>{{ member.start_date }}</td>
+                <td>{{ member.end_date }}</td>
+                <td>
+                    {% if member.end_date < now %}
+                    <form action="{% url 'renew_membership' member.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit">Renew</button>
+                    </form>
+                    {% else %}
+                    Active
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
